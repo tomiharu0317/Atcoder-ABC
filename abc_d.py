@@ -71,6 +71,39 @@ for bit in range(1 << n):
 
 print(ans)
 
+# 84
+# [考察]
+# エラトステネスの篩かけて最初に10**5 以下の素数リストを用意
+# その後累積和をやって2017-like-numberなら+1
+# 最後にl,rを受け取ってO(1)で解答していく
+# first - impressionの通りの問題であったが、計算量に信頼を置けず、
+# 実装もしないまま終わってしまった
+# 最悪である
+
+q = int(input())
+n = 10**5
+ansli = [0]*(n+1)
+
+def primes(n):
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    for i in range(2, n + 1):
+        for j in range(i * 2, n + 1, i):
+            is_prime[j] = False
+    return is_prime
+
+li = primes(n+1)
+for i in range(3,n + 1):
+    if li[i] and li[(i+1)//2]:
+        ansli[i] = ansli[i - 1] + 1
+    else:
+        ansli[i] = ansli[i - 1]
+
+for i in range(q):
+    l, r = map(int, input().split())
+    print(ansli[r] - ansli[l-1])
+
 # 88.
 # [考察]
 # 全体のマス目から最短距離分のマス目だけが白であとは黒になればいいので、
