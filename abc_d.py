@@ -119,7 +119,29 @@ ans = bfs()
 if ans == float("inf"):
     print(-1)
 else:
-    print((h*w) - (ans+1) - count)
+    print((h * w) - (ans + 1) - count)
+
+
+# 94
+# [考察]
+# まずnは最大のものを選ぶ
+# nCrでrを先に決めた時、(n+1)Cr > nCrだから
+# rはnを除いてn//2 に近いものが正解
+# (n - r) / (n + 1) でrがn // 2 を分かれ目として対称になるから
+# combinationは必要ない
+
+n = int(input())
+a = list(map(int, input().split()))
+x = max(a)
+r = 0
+num = x//2
+diff = float("inf")
+for i in range(n):
+    dif = abs(num - a[i])
+    if dif < diff and a[i] != x:
+        diff = dif
+        r = a[i]
+print(x, r)
 
 # 126☆☆☆
 # [考察]
@@ -156,10 +178,15 @@ dfs(0,0)
 for i in ans:
     print(i)
 
-127
+# 127
+# [考察]
+# 単純に元のリストに追加してソートして後ろからの合計とれば行けると思った
+# けどいけなかった
+# 結局最初の直感の考察が当たっており、一枚のカードにつき一回の書き換え、
+# 書き換える数は大きいほうから、書き換えられるカードは小さいほうから
+# 見ていくことでn回の操作だけで済むようになっている
 
 # TLE
-
 n, m = map(int, input().split())
 a = list(map(int, input().split()))
 for i in range(m):
@@ -167,6 +194,31 @@ for i in range(m):
     a += [c] * b
 a.sort()
 print(sum(a[-n:]))
+
+# AC　計算量の見積もりが分からない
+
+n, m = map(int, input().split())
+a = sorted(list(map(int, input().split())))
+li = []
+for i in range(m):
+    b, c = map(int, input().split())
+    li.append((c, b))
+li = sorted(li, reverse = True)
+
+count = 0 #li[num][1]
+num = 0  #index
+
+for i in range(n):
+    if a[i] < li[num][0]:
+        a[i] = li[num][0]
+        count += 1
+    if count == li[num][1] :
+        num += 1
+        count = 0
+    if num == m:
+        break
+
+print(sum(a))
 
 # 130
 # [考察]
