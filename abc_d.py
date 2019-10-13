@@ -156,6 +156,18 @@ dfs(0,0)
 for i in ans:
     print(i)
 
+127
+
+# TLE
+
+n, m = map(int, input().split())
+a = list(map(int, input().split()))
+for i in range(m):
+    b, c = map(int, input().split())
+    a += [c] * b
+a.sort()
+print(sum(a[-n:]))
+
 # 130
 # [考察]
 # s(l,r)=∑[r,l]A[k]としたとき、s(a,b+1)>s(a,b),s(a,b)>s(a+1,b)より、
